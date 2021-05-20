@@ -101,26 +101,37 @@ func main() {
 	}
 	for {
 
-		for i := 0; i < 5; i++ {
-			t := time.Now()
+		t := time.Now()
 
-			h := t.Hour()
-			m := t.Minute()
-			s := t.Second()
+		h, m, s := t.Hour(), t.Minute(), t.Second()
 
-			h1 := h / 10
-			h2 := h % 10 //int(math.Mod(float64(h), 10))
-			m1 := m / 10
-			m2 := m % 10 //int(math.Mod(float64(m), 10))
-			s1 := s / 10
-			s2 := s % 10 //int(math.Mod(float64(s), 10))
+		h1 := h / 10
+		h2 := h % 10 //int(math.Mod(float64(h), 10))
+		m1 := m / 10
+		m2 := m % 10 //int(math.Mod(float64(m), 10))
+		s1 := s / 10
+		s2 := s % 10 //int(math.Mod(float64(s), 10))
 
-			var sep int
-			if s2%2 == 0 {
-				sep = 1
-			}
-			fmt.Printf("%s %s %s %s %s %s %s %s \n", digits[h1][i], digits[h2][i], separator[sep][i], digits[m1][i], digits[m2][i], separator[sep][i], digits[s1][i], digits[s2][i])
+		var sep int
+		if s2%2 == 0 {
+			sep = 1
 		}
+
+		clock := [...]clNumb{
+			digits[h1], digits[h2],
+			separator[sep],
+			digits[m1], digits[m2],
+			separator[sep],
+			digits[s1], digits[s2],
+		}
+		for line := range digits[0] {
+
+			for digit := range clock {
+				fmt.Print(clock[digit][line], " ")
+			}
+			fmt.Println()
+		}
+
 		time.Sleep(time.Millisecond)
 		screen.Clear()
 		screen.MoveTopLeft()
